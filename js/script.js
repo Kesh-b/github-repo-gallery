@@ -28,23 +28,24 @@ const displayData = function (data) {
          <p><strong>Number of public repos:</strong> ${data.public_repos}</p>
         </div> `; 
         overview.append(div); 
-        reposData();
+        reposData(username);
     };
 
-const reposData = async function ()  {
+const reposData = async function (username)  {
     const requestRepo = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=100`);
     const dataRepo = await requestRepo.json();
     repoDisplay(dataRepo);
 };
 
 const repoDisplay = function (repos) {
-    for (let repo of repos){
+    filterInput.classList.remove("hide");
+    for (const repo of repos){
         const repoItem = document.createElement("li");
         repoItem.classList.add("repo");
         repoItem.innerHTML = `<h3>${repo.name}</h3>`;
         repolist.append(repoItem); 
     }
-    filterInput.classList.remove("hide");
+    
 };
 
 repolist.addEventListener("click", function(e) {
@@ -71,6 +72,7 @@ repolist.addEventListener("click", function(e) {
     };
     
     const specificRepo = function(repoInfo, language) {
+        
         RepoIndividual.innerHTML = "";
         RepoIndividual.classList.remove("hide");
         reposElement.classList.add("hide");
@@ -90,12 +92,13 @@ repolist.addEventListener("click", function(e) {
 backToRepo.addEventListener("click", function () {
     RepoIndividual.classList.add("hide");
     reposElement.classList.remove("hide");
-    backToRepo.classList.remove("hide");
+    backToRepo.classList.add("hide");
 });
 
 filterInput.addEventListener("input", function (e) {
     const searchItem = e.target.value; 
     const repos = document.querySelectorAll(".repo"); 
+    
 
     const lowerCase = searchItem.toLowerCase();
     for( const repo of repos) {
