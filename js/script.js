@@ -72,15 +72,15 @@ repolist.addEventListener("click", function(e) {
     };
     
     const specificRepo = function(repoInfo, language) {
-        
+        backToRepo.classList.remove("hide");
         RepoIndividual.innerHTML = "";
         RepoIndividual.classList.remove("hide");
         reposElement.classList.add("hide");
-        backToRepo.classList.remove("hide");
+        
         const div = document.createElement ("div")
              div.innerHTML = 
                 `<h3>Name: ${repoInfo.name}</h3>
-                <p>Description: ${repoInfo.discription}</p>
+                <p>Description: ${repoInfo.description}</p>
                 <p>Default Branch: ${repoInfo.default_branch}</p>
                 <p>Languages: ${language.join(", ")}</p>
                 <a class="visit" href="${repoInfo.html_url}" target="_blank" rel="noreferrer noopener">View Repo on GitHub!</a>`;
